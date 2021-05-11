@@ -1,0 +1,19 @@
+{
+    "main": "dist/index.js",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/react": "^16.8"
+    },
+    "peerDependencies": {
+        "framer": "^1.0",
+        "react": "^16.8"
+    },
+    "author": "Iain Kettles",
+    "dependencies": {
+        "@framer/framer.default": "^1.102.0",
+        "@turf/turf": "^6.3.0",
+        "coordinate-parser": "^1.0.7",
+        "react-map-gl": "6.0.2"
+    },
+    "version": "1.0.0"
+}

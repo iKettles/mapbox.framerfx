@@ -1,0 +1,181 @@
+{
+  "root" : {
+    "__class" : "RootNode",
+    "children" : [
+      {
+        "__class" : "PageNode",
+        "children" : [
+          {
+            "__class" : "CodeComponentNode",
+            "$control__accessToken" : {
+              "type" : "string",
+              "value" : "pk.eyJ1IjoiaWtldHRsZXMiLCJhIjoiY2p5eWl6Z3ZqMHJpNjNlbzFnNGVtMmx1OSJ9.Z6QIM0zPnDl87kq3x6BotA"
+            },
+            "$control__anonymousStyle" : {
+              "type" : "enum",
+              "value" : "mapbox:\/\/styles\/mapbox\/light-v9"
+            },
+            "$control__authenticatedStyle" : {
+              "type" : "enum",
+              "value" : "Custom"
+            },
+            "$control__autoplay" : {
+              "type" : "boolean",
+              "value" : true
+            },
+            "$control__autoplayDelay" : {
+              "type" : "number",
+              "value" : 0
+            },
+            "$control__bearing" : {
+              "type" : "number",
+              "value" : 360
+            },
+            "$control__destinationPin" : {
+              "type" : "componentinstance"
+            },
+            "$control__latitude" : {
+              "type" : "number",
+              "value" : 34.285370999999998
+            },
+            "$control__longitude" : {
+              "type" : "number",
+              "value" : -118.883112
+            },
+            "$control__mapType" : {
+              "type" : "enum",
+              "value" : "route"
+            },
+            "$control__originPin" : {
+              "type" : "componentinstance"
+            },
+            "$control__pin" : {
+              "type" : "componentinstance",
+              "value" : [
+
+              ]
+            },
+            "$control__pitch" : {
+              "type" : "number",
+              "value" : 0
+            },
+            "$control__repetition" : {
+              "type" : "number",
+              "value" : 0
+            },
+            "$control__routePreset" : {
+              "type" : "enum",
+              "value" : "OMDB-KJFK"
+            },
+            "$control__routeType" : {
+              "type" : "enum",
+              "value" : "preset"
+            },
+            "$control__showLocationText" : {
+              "type" : "boolean",
+              "value" : true
+            },
+            "$control__test" : {
+              "type" : "array",
+              "value" : [
+
+              ]
+            },
+            "$control__trajectoryColor" : {
+              "type" : "color",
+              "value" : "#09F"
+            },
+            "$control__transitionDuration" : {
+              "type" : "number",
+              "value" : 10000
+            },
+            "$control__userStyle" : {
+              "type" : "string",
+              "value" : "mapbox:\/\/styles\/ikettles\/ckkzluwvg2ljf17od80xeyvbz"
+            },
+            "$control__zoom" : {
+              "type" : "number",
+              "value" : 9
+            },
+            "aspectRatio" : null,
+            "bottom" : null,
+            "centerAnchorX" : 1.2342419080068145,
+            "centerAnchorY" : 0.79977876106194712,
+            "clip" : true,
+            "codeComponentIdentifier" : ".\/Mapbox.tsx_Mapbox",
+            "codeComponentPackageVersion" : null,
+            "codeOverrideEnabled" : false,
+            "constraintsLocked" : false,
+            "duplicatedFrom" : [
+              ".\/Mapbox.tsx_Mapbox"
+            ],
+            "exportOptions" : [
+
+            ],
+            "fillColor" : "rgba(255,255,255,1)",
+            "fillEnabled" : false,
+            "fillImage" : null,
+            "fillImageOriginalName" : null,
+            "fillImagePixelHeight" : null,
+            "fillImagePixelWidth" : null,
+            "fillImageResize" : "fill",
+            "fillType" : "color",
+            "height" : 904,
+            "heightType" : 0,
+            "id" : "BZSCpUbZ1",
+            "intrinsicHeight" : 375,
+            "intrinsicWidth" : 375,
+            "left" : 278,
+            "locked" : false,
+            "name" : null,
+            "opacity" : 1,
+            "originalid" : null,
+            "parentid" : "ewop_niwF",
+            "previewSettings" : null,
+            "radius" : 0,
+            "radiusBottomLeft" : 0,
+            "radiusBottomRight" : 0,
+            "radiusIsRelative" : false,
+            "radiusPerCorner" : false,
+            "radiusTopLeft" : 0,
+            "radiusTopRight" : 0,
+            "right" : null,
+            "rotation" : 0,
+            "top" : 484,
+            "visible" : true,
+            "width" : 950,
+            "widthType" : 0
+          }
+        ],
+        "duplicatedFrom" : null,
+        "guidesX" : [
+
+        ],
+        "guidesY" : [
+
+        ],
+        "homeNodeId" : null,
+        "id" : "ewop_niwF",
+        "name" : "Page 1",
+        "originalid" : null,
+        "parentid" : "YekCXl9bu",
+        "visible" : false
+      }
+    ],
+    "disableBackdropFilters" : true,
+    "duplicatedFrom" : null,
+    "id" : "YekCXl9bu",
+    "name" : null,
+    "originalid" : null,
+    "parentid" : null,
+    "thumbnailNodeId" : null,
+    "tokens" : {
+
+    },
+    "tokensIndex" : [
+
+    ],
+    "visible" : false
+  },
+  "version" : 78
+}
