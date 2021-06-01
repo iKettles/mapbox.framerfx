@@ -3,27 +3,16 @@ import { Marker } from "react-map-gl"
 import { ComponentInstance } from "./hooks/useConnectedComponentInstance"
 
 interface Props {
-    size?: number
-    title?: string
-    longitude: number
-    latitude: number
-    offsetLeft?: number
-    offsetTop?: number
+    marker: { latitude: number; longitude: number }
     component?: ComponentInstance
-    onClick?: () => void
+    onClick?: (params: { latitude: number; longitude: number }) => void
 }
 
 const defaultPin = (props: Props) => {
-    const {
-        longitude,
-        latitude,
-        offsetLeft = 0,
-        offsetTop = 0,
-        component,
-    } = props
+    const { marker, component, onClick } = props
 
     return (
-        <Marker longitude={longitude} latitude={latitude}>
+        <Marker longitude={marker.longitude} latitude={marker.latitude}>
             {!component ? (
                 <div
                     style={{
@@ -32,20 +21,20 @@ const defaultPin = (props: Props) => {
                         borderRadius: 4,
                         transform: "translateX(-50%)",
                     }}
-                >
-                    {props.title}
-                </div>
+                ></div>
             ) : (
                 React.cloneElement(component, {
                     width: component.props.width,
                     height: component.props.height,
                     style: {
+                        ...component.props.style,
                         width: component.props.width,
                         height: component.props.height,
-                        left: -(component.props.width / 2) + offsetLeft,
-                        top: -(component.props.height / 2) + offsetTop,
-                        ...component.props.style,
+                        transform: "translateX(-50%)",
                         position: "relative",
+                    },
+                    onTap() {
+                        if (onClick) onClick(marker)
                     },
                 })
             )}

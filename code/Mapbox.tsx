@@ -1,24 +1,23 @@
+import { addPropertyControls, ControlType } from "framer"
 import * as React from "react"
-import { Source, Layer } from "react-map-gl"
-import { ControlType, addPropertyControls } from "framer"
-import { Styles } from "./utils/constants"
-import { MapSpatialCoordinates, MapViewportCoordinates } from "./utils/types"
-import MapboxMapCore, { MapboxMapCoreProps } from "./MapboxMapCore"
-import { viewportReducer } from "./lib/viewportReducer"
 import {
     ComponentInstance,
     useConnectedComponentInstance,
 } from "./hooks/useConnectedComponentInstance"
-import { parsedRoute } from "./lib/defaultRoute"
+import { viewportReducer } from "./lib/viewportReducer"
+import MapboxMapCore, { MapboxMapCoreProps } from "./MapboxMapCore"
 import { Pin } from "./Pin"
+import { Styles } from "./utils/constants"
+import { MapSpatialCoordinates, MapViewportCoordinates } from "./utils/types"
 
 window.MAPBOX_DEBUG = false
-
 interface MapboxProps extends MapboxMapCoreProps {
     locations: MapSpatialCoordinates[]
-    originPin: ComponentInstance
-    destinationPin: ComponentInstance
-    trajectoryColor: string
+    currentLocationPin: ComponentInstance
+    currentLocationCoordinates: { longitude; latitude }
+    showCurrentLocation: boolean
+    markerPin: ComponentInstance
+    onMarkerClick: (params: { latitude: number; longitude: number }) => void
 }
 
 export const Mapbox: React.FC<MapboxProps> = (props) => {
@@ -30,15 +29,19 @@ export const Mapbox: React.FC<MapboxProps> = (props) => {
         zoom,
         pitch,
         bearing,
-        originPin,
-        destinationPin,
-        trajectoryColor,
+        markerPin,
+        showCurrentLocation,
+        currentLocationCoordinates,
+        currentLocationPin: currentLocationMarker,
+        locations,
+        onMarkerClick,
         ...rest
     } = props
-    const [connectedOriginPin] = useConnectedComponentInstance(originPin)
-    const [connectedDestinationPin] = useConnectedComponentInstance(
-        destinationPin
+    const [connectedCurrentLocation] = useConnectedComponentInstance(
+        currentLocationMarker
     )
+    const [connectedMarker] = useConnectedComponentInstance(markerPin)
+
     const [viewport, dispatch] = React.useReducer(viewportReducer, {
         width: width as number,
         height: height as number,
@@ -74,18 +77,9 @@ export const Mapbox: React.FC<MapboxProps> = (props) => {
         })
     }, [width, height, latitude, longitude, zoom, bearing, pitch])
 
-    const routeLayer = {
-        type: "line",
-        layout: {
-            "line-join": "round",
-            "line-cap": "round",
-        },
-        paint: {
-            "line-color": trajectoryColor,
-            "line-width": 4,
-        },
-    }
+    console.log()
 
+    console.log(currentLocationCoordinates)
     return (
         <div style={containerStyle}>
             <MapboxMapCore
@@ -95,31 +89,22 @@ export const Mapbox: React.FC<MapboxProps> = (props) => {
                 height={"100%"}
                 onUpdateViewport={handleViewportUpdate}
             >
-                <Source type={"geojson"} data={parsedRoute}>
-                    <Layer {...routeLayer} />
-                </Source>
-                {connectedOriginPin && (
+                {showCurrentLocation && (
                     <Pin
-                        latitude={parsedRoute.geometry.coordinates[0][1]}
-                        longitude={parsedRoute.geometry.coordinates[0][0]}
-                        component={connectedOriginPin}
+                        marker={{
+                            longitude: currentLocationCoordinates.longitude,
+                            latitude: currentLocationCoordinates.latitude,
+                        }}
+                        component={connectedCurrentLocation}
                     />
                 )}
-                {connectedDestinationPin && (
+                {locations.map((marker) => (
                     <Pin
-                        latitude={
-                            parsedRoute.geometry.coordinates[
-                                parsedRoute.geometry.coordinates.length - 1
-                            ][1]
-                        }
-                        longitude={
-                            parsedRoute.geometry.coordinates[
-                                parsedRoute.geometry.coordinates.length - 1
-                            ][0]
-                        }
-                        component={connectedDestinationPin}
+                        marker={marker}
+                        component={connectedMarker}
+                        onClick={onMarkerClick}
                     />
-                )}
+                ))}
             </MapboxMapCore>
         </div>
     )
@@ -190,15 +175,53 @@ addPropertyControls(Mapbox, {
         max: 360,
         defaultValue: Mapbox.defaultProps.bearing,
     },
-    trajectoryColor: {
-        title: "Line Color",
-        type: ControlType.Color,
+    showCurrentLocation: {
+        type: ControlType.Boolean,
+        title: "Show Current Location",
+        defaultValue: false,
     },
-    originPin: {
+    currentLocationCoordinates: {
+        type: ControlType.Object,
+        controls: {
+            longitude: {
+                type: ControlType.Number,
+                displayStepper: true,
+                defaultValue: 4.88816,
+            },
+            latitude: {
+                type: ControlType.Number,
+                displayStepper: true,
+                defaultValue: 52.37274,
+            },
+        },
+        hidden: (props) => !props.showCurrentLocation,
+    },
+    currentLocationPin: {
+        type: ControlType.ComponentInstance,
+        hidden: (props) => !props.showCurrentLocation,
+    },
+    markerPin: {
         type: ControlType.ComponentInstance,
     },
-    destinationPin: {
-        type: ControlType.ComponentInstance,
+    locations: {
+        type: ControlType.Array,
+        title: "Markers",
+        control: {
+            type: ControlType.Object,
+            title: "Coordinates",
+            controls: {
+                latitude: {
+                    type: ControlType.Number,
+                    displayStepper: true,
+                    defaultValue: 52.358,
+                },
+                longitude: {
+                    type: ControlType.Number,
+                    displayStepper: true,
+                    defaultValue: 4.8686,
+                },
+            },
+        },
     },
 })
 
